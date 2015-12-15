@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "JWBonjourManager.h"
 
 typedef enum : NSUInteger {
     JWKeyCodeMenu = 1,
@@ -36,6 +37,7 @@ typedef enum : NSUInteger {
     [super viewDidLoad];
     ((UIScrollView *)self.view).contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height * 2);
     [self tcpInit];
+    [[JWBonjourManager sharedInstance] start];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,7 +47,7 @@ typedef enum : NSUInteger {
 
 - (void)tcpInit
 {
-    NSString *url = @"192.168.10.106";
+    NSString *url = @"milink-1497877484.local.";
     CFReadStreamRef readStream;
     CFWriteStreamRef writeStream;
     CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)url, 6091, &readStream, &writeStream);
@@ -183,7 +185,6 @@ typedef enum : NSUInteger {
 
 - (void)stream:(NSStream *)stream handleEvent:(NSStreamEvent)eventCode
 {
-    NSLog(@"Stream triggered %@", @(eventCode));
     switch(eventCode) {
         case NSStreamEventHasSpaceAvailable: {
             if(stream == _outputStream) {
@@ -193,7 +194,7 @@ typedef enum : NSUInteger {
         }
         case NSStreamEventHasBytesAvailable: {
             if(stream == _inputStream) {
-                NSLog(@"inputStream is ready.");
+//                NSLog(@"inputStream is ready.");
                 
                 uint8_t buf[1024];
                 NSInteger len = 0;
@@ -202,7 +203,7 @@ typedef enum : NSUInteger {
                 if ((len = [_inputStream read:buf maxLength:1024]) > 0) {
                     [data appendBytes: (const void *)buf length:len];
                 }
-                NSLog(@"Result: %@", data);
+//                NSLog(@"Result: %@", data);
             }
             break;
         case NSStreamEventErrorOccurred:
@@ -211,7 +212,8 @@ typedef enum : NSUInteger {
         case NSStreamEventEndEncountered:
             [stream open];
             break;
-        default: 
+        default:
+            NSLog(@"Stream triggered %@", @(eventCode));
             break;
         }
     }

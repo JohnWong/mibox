@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		526729C21C208A6300BF4C90 /* JWBonjourManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 526729BE1C208A6300BF4C90 /* JWBonjourManager.m */; };
 		52FE455E1C1F165A00E3D8DA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FE455D1C1F165A00E3D8DA /* main.m */; };
 		52FE45611C1F165A00E3D8DA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FE45601C1F165A00E3D8DA /* AppDelegate.m */; };
 		52FE45641C1F165A00E3D8DA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FE45631C1F165A00E3D8DA /* ViewController.m */; };
@@ -16,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		526729BD1C208A6300BF4C90 /* JWBonjourManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JWBonjourManager.h; sourceTree = "<group>"; };
+		526729BE1C208A6300BF4C90 /* JWBonjourManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JWBonjourManager.m; sourceTree = "<group>"; };
 		52FE45591C1F165A00E3D8DA /* mibox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mibox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52FE455D1C1F165A00E3D8DA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		52FE455F1C1F165A00E3D8DA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -58,6 +61,8 @@
 		52FE455B1C1F165A00E3D8DA /* mibox */ = {
 			isa = PBXGroup;
 			children = (
+				526729BD1C208A6300BF4C90 /* JWBonjourManager.h */,
+				526729BE1C208A6300BF4C90 /* JWBonjourManager.m */,
 				52FE455F1C1F165A00E3D8DA /* AppDelegate.h */,
 				52FE45601C1F165A00E3D8DA /* AppDelegate.m */,
 				52FE45621C1F165A00E3D8DA /* ViewController.h */,
@@ -150,6 +155,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52FE45641C1F165A00E3D8DA /* ViewController.m in Sources */,
+				526729C21C208A6300BF4C90 /* JWBonjourManager.m in Sources */,
 				52FE45611C1F165A00E3D8DA /* AppDelegate.m in Sources */,
 				52FE455E1C1F165A00E3D8DA /* main.m in Sources */,
 			);
@@ -300,6 +306,7 @@
 				52FE45721C1F165A00E3D8DA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
