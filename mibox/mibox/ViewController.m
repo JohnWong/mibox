@@ -205,8 +205,13 @@ typedef enum : NSUInteger {
                 NSLog(@"Result: %@", data);
             }
             break;
-        }
-        default: {
+        case NSStreamEventErrorOccurred:
+            NSLog(@"%@", stream.streamError);
+            break;
+        case NSStreamEventEndEncountered:
+            [stream open];
+            break;
+        default: 
             break;
         }
     }
