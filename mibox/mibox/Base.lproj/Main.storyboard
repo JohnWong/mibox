@@ -18,10 +18,91 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uz9-SC-tWr">
-                                <rect key="frame" x="8" y="8" width="46" height="30"/>
-                                <state key="normal" title="Send"/>
+                                <rect key="frame" x="8" y="8" width="56" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="Menu"/>
                                 <connections>
                                     <action selector="sendMenu:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Gia-99-nQs"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1yo-ZC-CUh">
+                                <rect key="frame" x="8" y="55" width="65" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="Return"/>
+                                <connections>
+                                    <action selector="sendReturn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ib7-e6-oeW"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cbY-m2-Yx9">
+                                <rect key="frame" x="8" y="102" width="59" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="Home"/>
+                                <connections>
+                                    <action selector="sendHome:" destination="BYZ-38-t0r" eventType="touchUpInside" id="W8n-ar-QNk"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LKe-Ki-Va6">
+                                <rect key="frame" x="8" y="149" width="31" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="Off"/>
+                                <connections>
+                                    <action selector="sendOff:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0UO-im-maX"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m8H-i8-Ogb">
+                                <rect key="frame" x="8" y="196" width="108" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="Volumn Up"/>
+                                <connections>
+                                    <action selector="sendVolumnUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bb3-ak-UVa"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fKg-0c-eOA">
+                                <rect key="frame" x="8" y="243" width="137" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="Volumn Down"/>
+                                <connections>
+                                    <action selector="sendVolumnDown:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Exh-bH-lV2"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tSM-bh-ys4">
+                                <rect key="frame" x="198" y="8" width="30" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="⬆️"/>
+                                <connections>
+                                    <action selector="sendUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cWA-v3-BXP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kZh-ha-oXx">
+                                <rect key="frame" x="198" y="102" width="30" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="⬇️"/>
+                                <connections>
+                                    <action selector="sendDown:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rc1-oc-bGT"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3NR-qu-H2r">
+                                <rect key="frame" x="250" y="55" width="30" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="➡️"/>
+                                <connections>
+                                    <action selector="sendRight:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6TR-vg-RDu"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gNA-Jd-D5W">
+                                <rect key="frame" x="198" y="55" width="30" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="✅"/>
+                                <connections>
+                                    <action selector="sendConfirm:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hYw-3v-ong"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ldp-D2-3gu">
+                                <rect key="frame" x="143" y="55" width="30" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="⬅️"/>
+                                <connections>
+                                    <action selector="sendLeft:" destination="BYZ-38-t0r" eventType="touchUpInside" id="off-m3-vrr"/>
                                 </connections>
                             </button>
                         </subviews>

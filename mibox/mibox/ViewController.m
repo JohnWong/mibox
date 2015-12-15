@@ -8,6 +8,20 @@
 
 #import "ViewController.h"
 
+typedef enum : NSUInteger {
+    JWKeyCodeMenu = 1,
+    JWKeyCodeReturn,
+    JWKeyCodeHome,
+    JWKeyCodeOff,
+    JWKeyCodeConfirm,
+    JWKeyCodeVolumnUp,
+    JWKeyCodeVolumnDown,
+    JWKeyCodeUp,
+    JWKeyCodeDown,
+    JWKeyCodeLeft,
+    JWKeyCodeRight
+} JWKeyCode;
+
 @interface ViewController () <NSStreamDelegate>
 
 @end
@@ -31,7 +45,7 @@
 
 - (void)tcpInit
 {
-    NSString *url = @"192.168.10.102";
+    NSString *url = @"192.168.10.106";
     CFReadStreamRef readStream;
     CFWriteStreamRef writeStream;
     CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)url, 6091, &readStream, &writeStream);
@@ -46,39 +60,123 @@
 }
 
 - (IBAction)sendMenu:(id)sender {
-    NSData *data = [self dataWithEvent];
-    NSLog(@"%@", data);
-    const uint8_t *buf = (const uint8_t*)[data bytes];
-    [_outputStream write:buf maxLength:data.length];
+    [self sendKeyCode:JWKeyCodeMenu];
 }
 
-- (NSData *)dataWithEvent
+- (IBAction)sendReturn:(id)sender {
+    [self sendKeyCode:JWKeyCodeReturn];
+}
+
+- (IBAction)sendHome:(id)sender {
+    [self sendKeyCode:JWKeyCodeHome];
+}
+
+- (IBAction)sendOff:(id)sender {
+    [self sendKeyCode:JWKeyCodeOff];
+}
+
+- (IBAction)sendVolumnUp:(id)sender {
+    [self sendKeyCode:JWKeyCodeVolumnUp];
+}
+
+- (IBAction)sendVolumnDown:(id)sender {
+    [self sendKeyCode:JWKeyCodeVolumnDown];
+}
+
+- (IBAction)sendUp:(id)sender {
+    [self sendKeyCode:JWKeyCodeUp];
+}
+
+- (IBAction)sendDown:(id)sender {
+    [self sendKeyCode:JWKeyCodeDown];
+}
+
+- (IBAction)sendLeft:(id)sender {
+    [self sendKeyCode:JWKeyCodeLeft];
+}
+
+- (IBAction)sendRight:(id)sender {
+    [self sendKeyCode:JWKeyCodeRight];
+}
+
+- (IBAction)sendConfirm:(id)sender {
+    [self sendKeyCode:JWKeyCodeConfirm];
+}
+
+- (void)sendKeyCode:(JWKeyCode)keyCode
 {
-    NSMutableData *mutableData = [[NSMutableData alloc] init];
-    {
-        Byte bytes[] = {0x04, 0x00, 0x41, 0x01};
-        [mutableData appendBytes:bytes length:sizeof(bytes)];
-    }
+    NSData *data = [self dataWithKeyCode:keyCode isRep:NO];
+    [_outputStream write:[data bytes] maxLength:data.length];
+    data = [self dataWithKeyCode:keyCode isRep:YES];
+    [_outputStream write:[data bytes] maxLength:data.length];
+}
+
+- (NSData *)dataWithKeyCode:(JWKeyCode)event isRep:(BOOL)isReplicated
+{
     _sequence += 1;
-    uint32_t littleEndian = CFSwapInt32(_sequence);
-    [mutableData appendBytes:&littleEndian length:sizeof(&_sequence)];
-    {
-        Byte bytes[] = {0x00, 0x3a, 0x01, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00};
-        [mutableData appendBytes:bytes length:sizeof(bytes)];
+    uint32_t isRep = 0 + isReplicated;
+    uint64_t keyCode = 0;
+    switch (event) {
+        case JWKeyCodeMenu:
+            keyCode = 0x52040000008b0500;
+            break;
+        case JWKeyCodeReturn:
+            keyCode = 0x04040000009e0500;
+            break;
+        case JWKeyCodeHome:
+            keyCode = 0x0304000000660500;
+            break;
+        case JWKeyCodeOff:
+            keyCode = 0x1a04000000740500;
+            break;
+        case JWKeyCodeConfirm:
+            keyCode = 0x42040000001c0500;
+            break;
+        case JWKeyCodeVolumnUp:
+            keyCode = 0x1804000000730500;
+            break;
+        case JWKeyCodeVolumnDown:
+            keyCode = 0x1904000000720500;
+            break;
+        case JWKeyCodeUp:
+            keyCode = 0x1304000000670500;
+            break;
+        case JWKeyCodeDown:
+            keyCode = 0x14040000006c0500;
+            break;
+        case JWKeyCodeLeft:
+            keyCode = 0x1504000000690500;
+            break;
+        case JWKeyCodeRight:
+            keyCode = 0x16040000006a0500;
+            break;
+        default:
+            break;
     }
-    Byte isRep = 0;
-    [mutableData appendBytes:&isRep length:sizeof(isRep)];
-    {
-        Byte bytes[] = {0x03, 0x00, 0x00, 0x00};
-        [mutableData appendBytes:bytes length:sizeof(bytes)];
-    }
-    {
-        Byte keyCode[] = {0x52, 0x04, 0x00, 0x00, 0x00, 0x8b};
-        [mutableData appendBytes:keyCode length:sizeof(keyCode)];
-    }
-    {
-        Byte bytes[] = {0x05, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x00, 0x00, 0x08, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a, 0x00, 0x00, 0x00, 0x02, 0x0b, 0x00, 0x00, 0x03, 0x01};
-        [mutableData appendBytes:bytes length:sizeof(bytes)];
+    
+    uint32_t bytes[] = {
+        0x04004101,
+        _sequence,
+        0x003a0100,
+        0x00000002,
+        isRep,
+        0x03000000,
+        keyCode >> 32,
+        keyCode & 0xffffffff,
+        0x00000006,
+        0x00000008,
+        0x07000000,
+        0x00000000,
+        0x00080000,
+        0x00000000,
+        0x00000a00,
+        0x0000020b,
+        0x00000301
+    };
+    NSMutableData *mutableData = [[NSMutableData alloc] init];
+    for (int i = 0; i < sizeof(bytes) / sizeof(bytes[0]); i ++) {
+        uint32_t swaped = CFSwapInt32(bytes[i]);
+        [mutableData appendBytes:&swaped length:sizeof(swaped)];
     }
     return [mutableData copy];
 }
@@ -86,7 +184,6 @@
 - (void)stream:(NSStream *)stream handleEvent:(NSStreamEvent)eventCode
 {
     NSLog(@"Stream triggered %@", @(eventCode));
-    
     switch(eventCode) {
         case NSStreamEventHasSpaceAvailable: {
             if(stream == _outputStream) {
