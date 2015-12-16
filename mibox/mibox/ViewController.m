@@ -23,9 +23,11 @@ typedef enum : NSUInteger {
     JWKeyCodeRight
 } JWKeyCode;
 
+
 @interface ViewController () <NSStreamDelegate>
 
 @end
+
 
 @implementation ViewController {
     NSInputStream *_inputStream;
@@ -33,14 +35,16 @@ typedef enum : NSUInteger {
     unsigned int _sequence;
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     ((UIScrollView *)self.view).contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height * 2);
     [self tcpInit];
     [[JWBonjourManager sharedInstance] start];
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -61,47 +65,58 @@ typedef enum : NSUInteger {
     [_outputStream open];
 }
 
-- (IBAction)sendMenu:(id)sender {
+- (IBAction)sendMenu:(id)sender
+{
     [self sendKeyCode:JWKeyCodeMenu];
 }
 
-- (IBAction)sendReturn:(id)sender {
+- (IBAction)sendReturn:(id)sender
+{
     [self sendKeyCode:JWKeyCodeReturn];
 }
 
-- (IBAction)sendHome:(id)sender {
+- (IBAction)sendHome:(id)sender
+{
     [self sendKeyCode:JWKeyCodeHome];
 }
 
-- (IBAction)sendOff:(id)sender {
+- (IBAction)sendOff:(id)sender
+{
     [self sendKeyCode:JWKeyCodeOff];
 }
 
-- (IBAction)sendVolumnUp:(id)sender {
+- (IBAction)sendVolumnUp:(id)sender
+{
     [self sendKeyCode:JWKeyCodeVolumnUp];
 }
 
-- (IBAction)sendVolumnDown:(id)sender {
+- (IBAction)sendVolumnDown:(id)sender
+{
     [self sendKeyCode:JWKeyCodeVolumnDown];
 }
 
-- (IBAction)sendUp:(id)sender {
+- (IBAction)sendUp:(id)sender
+{
     [self sendKeyCode:JWKeyCodeUp];
 }
 
-- (IBAction)sendDown:(id)sender {
+- (IBAction)sendDown:(id)sender
+{
     [self sendKeyCode:JWKeyCodeDown];
 }
 
-- (IBAction)sendLeft:(id)sender {
+- (IBAction)sendLeft:(id)sender
+{
     [self sendKeyCode:JWKeyCodeLeft];
 }
 
-- (IBAction)sendRight:(id)sender {
+- (IBAction)sendRight:(id)sender
+{
     [self sendKeyCode:JWKeyCodeRight];
 }
 
-- (IBAction)sendConfirm:(id)sender {
+- (IBAction)sendConfirm:(id)sender
+{
     [self sendKeyCode:JWKeyCodeConfirm];
 }
 
@@ -155,7 +170,7 @@ typedef enum : NSUInteger {
         default:
             break;
     }
-    
+
     uint32_t bytes[] = {
         0x04004101,
         _sequence,
@@ -173,10 +188,9 @@ typedef enum : NSUInteger {
         0x00000000,
         0x00000a00,
         0x0000020b,
-        0x00000301
-    };
+        0x00000301};
     NSMutableData *mutableData = [[NSMutableData alloc] init];
-    for (int i = 0; i < sizeof(bytes) / sizeof(bytes[0]); i ++) {
+    for (int i = 0; i < sizeof(bytes) / sizeof(bytes[0]); i++) {
         uint32_t swaped = CFSwapInt32(bytes[i]);
         [mutableData appendBytes:&swaped length:sizeof(swaped)];
     }
@@ -185,25 +199,25 @@ typedef enum : NSUInteger {
 
 - (void)stream:(NSStream *)stream handleEvent:(NSStreamEvent)eventCode
 {
-    switch(eventCode) {
+    switch (eventCode) {
         case NSStreamEventHasSpaceAvailable: {
-            if(stream == _outputStream) {
+            if (stream == _outputStream) {
                 NSLog(@"outputStream is ready.");
             }
             break;
         }
-        case NSStreamEventHasBytesAvailable: {
-            if(stream == _inputStream) {
-//                NSLog(@"inputStream is ready.");
-                
+        case NSStreamEventHasBytesAvailable:
+            if (stream == _inputStream) {
+                //                NSLog(@"inputStream is ready.");
+
                 uint8_t buf[1024];
                 NSInteger len = 0;
-                
-                NSMutableData* data=[[NSMutableData alloc] initWithLength:0];
+
+                NSMutableData *data = [[NSMutableData alloc] initWithLength:0];
                 if ((len = [_inputStream read:buf maxLength:1024]) > 0) {
-                    [data appendBytes: (const void *)buf length:len];
+                    [data appendBytes:(const void *)buf length:len];
                 }
-//                NSLog(@"Result: %@", data);
+                //                NSLog(@"Result: %@", data);
             }
             break;
         case NSStreamEventErrorOccurred:
@@ -215,8 +229,8 @@ typedef enum : NSUInteger {
         default:
             NSLog(@"Stream triggered %@", @(eventCode));
             break;
-        }
     }
+}
 }
 
 @end

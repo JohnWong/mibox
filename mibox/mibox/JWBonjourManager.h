@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface JWBonjourManager : NSObject {
     NSNetServiceBrowser *_netBrowser;
     NSMutableDictionary *_services;
