@@ -14,7 +14,12 @@
 @end
 
 
-@implementation JWBonjourManager
+@implementation JWBonjourManager {
+    NSNetServiceBrowser *_netBrowser;
+    NSMutableDictionary *_services;
+    BOOL _isRunning;
+    dispatch_queue_t _queue;
+}
 
 + (instancetype)sharedInstance
 {
@@ -33,14 +38,29 @@
         _services = [NSMutableDictionary dictionary];
         _netBrowser = [[NSNetServiceBrowser alloc] init];
         _netBrowser.delegate = self;
+        _queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     }
     return self;
 }
 
-- (void)startWithComplation:(void (^completion)())
+- (void)start
 {
-    [_services removeAllObjects];
-    [_netBrowser searchForServicesOfType:@"_rc._tcp" inDomain:@"local"];
+    if (!_isRunning) {
+        _isRunning = YES;
+        dispatch_async(_queue, ^{
+            [_netBrowser scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+            [_netBrowser searchForServicesOfType:@"_rc._tcp" inDomain:@"local"];
+            [[NSRunLoop currentRunLoop] run];
+        });
+    }
+}
+
+- (void)stop
+{
+    dispatch_async(_queue, ^{
+        [_services removeAllObjects];
+        [_netBrowser stop];
+    });
 }
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)browser didNotSearch:(NSDictionary *)errorDict
@@ -50,20 +70,23 @@
 
 - (void)netServiceBrowserDidStopSearch:(NSNetServiceBrowser *)browser
 {
+    _isRunning = NO;
 }
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)browser didFindService:(NSNetService *)service moreComing:(BOOL)moreComing
 {
     _services[service.name] = service;
     service.delegate = self;
-    [service startMonitoring];
-    [service resolveWithTimeout:5];
+    [service resolveWithTimeout:12];
 }
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)browser didRemoveService:(NSNetService *)service moreComing:(BOOL)moreComing
 {
     if ([_services.allKeys containsObject:service.name]) {
         [_services removeObjectForKey:service.name];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_observer didUpdateServices:[_services copy]];
+        });
     }
 }
 
@@ -71,20 +94,16 @@
 {
     if ([_services.allKeys containsObject:service.name]) {
         NSLog(@"%@:%s %@ %@ %ld", self.class, __FUNCTION__, service.name, service.hostName, (long)service.port);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_observer didUpdateServices:[_services copy]];
+        });
     }
 }
 
 
 - (void)netService:(NSNetService *)sender didNotResolve:(NSDictionary *)errorDict
 {
-    NSLog(@"%@:%s", self.class, __FUNCTION__);
-}
-
-- (void)netService:(NSNetService *)sender didUpdateTXTRecordData:(NSData *)data
-{
-    if ([_services.allKeys containsObject:sender.name]) {
-        NSLog(@"%@:%s %@", self.class, __FUNCTION__, [NSNetService dictionaryFromTXTRecordData:data]);
-    }
+    NSLog(@"%@:%s %@", self.class, __FUNCTION__, errorDict);
 }
 
 @end

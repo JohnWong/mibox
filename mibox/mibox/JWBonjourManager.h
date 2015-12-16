@@ -9,12 +9,20 @@
 #import <Foundation/Foundation.h>
 
 
-@interface JWBonjourManager : NSObject {
-    NSNetServiceBrowser *_netBrowser;
-    NSMutableDictionary *_services;
-}
+@protocol JWBonjourObserver <NSObject>
+
+- (void)didUpdateServices:(NSDictionary *)services;
+
+@end
+
+
+@interface JWBonjourManager : NSObject
+
+@property (nonatomic, weak) id<JWBonjourObserver> observer;
 
 + (instancetype)sharedInstance;
+
 - (void)start;
+- (void)stop;
 
 @end

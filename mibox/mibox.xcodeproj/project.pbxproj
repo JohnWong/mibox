@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5231DE0D1C21C13D00AE8D40 /* JWRemoteControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5231DE0C1C21C13D00AE8D40 /* JWRemoteControl.m */; };
 		526729C21C208A6300BF4C90 /* JWBonjourManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 526729BE1C208A6300BF4C90 /* JWBonjourManager.m */; };
 		52FE455E1C1F165A00E3D8DA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FE455D1C1F165A00E3D8DA /* main.m */; };
 		52FE45611C1F165A00E3D8DA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FE45601C1F165A00E3D8DA /* AppDelegate.m */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5231DE0B1C21C13D00AE8D40 /* JWRemoteControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JWRemoteControl.h; sourceTree = "<group>"; };
+		5231DE0C1C21C13D00AE8D40 /* JWRemoteControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JWRemoteControl.m; sourceTree = "<group>"; };
 		526729BD1C208A6300BF4C90 /* JWBonjourManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JWBonjourManager.h; sourceTree = "<group>"; };
 		526729BE1C208A6300BF4C90 /* JWBonjourManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JWBonjourManager.m; sourceTree = "<group>"; };
 		52FE45591C1F165A00E3D8DA /* mibox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mibox.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,6 +75,8 @@
 				52FE456A1C1F165A00E3D8DA /* LaunchScreen.storyboard */,
 				52FE456D1C1F165A00E3D8DA /* Info.plist */,
 				52FE455C1C1F165A00E3D8DA /* Supporting Files */,
+				5231DE0B1C21C13D00AE8D40 /* JWRemoteControl.h */,
+				5231DE0C1C21C13D00AE8D40 /* JWRemoteControl.m */,
 			);
 			path = mibox;
 			sourceTree = "<group>";
@@ -158,6 +163,7 @@
 				526729C21C208A6300BF4C90 /* JWBonjourManager.m in Sources */,
 				52FE45611C1F165A00E3D8DA /* AppDelegate.m in Sources */,
 				52FE455E1C1F165A00E3D8DA /* main.m in Sources */,
+				5231DE0D1C21C13D00AE8D40 /* JWRemoteControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
