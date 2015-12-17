@@ -12,6 +12,7 @@
 
 
 @interface ViewController () <JWBonjourObserver>
+@property (weak, nonatomic) IBOutlet UIButton *tvButton;
 
 @end
 
@@ -23,11 +24,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    ((UIScrollView *)self.view).contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height * 2);
     JWBonjourManager *bonjourManager = [JWBonjourManager sharedInstance];
     bonjourManager.observer = self;
     [bonjourManager start];
-    _remoteControl = [[JWRemoteControl alloc] initWithHost:@"milink-1417336602.local." port:6091];
+}
+
+- (void)setNetService:(NSNetService *)service
+{
+    if (_remoteControl) {
+        [_remoteControl stop];
+    }
+    _remoteControl = [[JWRemoteControl alloc] initWithHost:service.hostName port:service.port];
     [_remoteControl start];
 }
 
@@ -40,6 +47,12 @@
 - (void)didUpdateServices:(NSDictionary *)services
 {
     NSLog(@"%@", services);
+    if ([self.tvButton.titleLabel.text isEqualToString:@"Loading"]) {
+        for (NSString *key in services) {
+            [_tvButton setTitle:key forState:UIControlStateNormal];
+            [self setNetService:services[key]];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
