@@ -1,8 +1,11 @@
 # mibox
 小米盒子协议
 
-### 设备发现
+### 分析的方法
 
+先使用了 Charles 抓包分析，因为协议没有依赖 http 请求，所以转而使用 WireShark 抓包来做。抓包的方法参考[iPhone网络请求捕获](http://johnwong.github.io/mobile/2015/11/04/sniffing-network-traffic-on-iphone.html)。
+
+### 设备发现
 
 可以通过DNS-SD协议来发现设备：
 
